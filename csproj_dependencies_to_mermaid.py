@@ -150,8 +150,25 @@ def generate(directory: str, orientation: Orientation = Orientation.TOP_DOWN) ->
     return mermaid_markdown
 
 
+def parse_orientation(arg: str) -> Orientation:
+    """
+    Parses the orientation from a string. Returns TOP_DOWN if the
+    argument is not recognized.
+
+    Args:
+        arg (str): The string to parse. This should be one of "TD" or "LR".
+
+    Returns:
+        Orientation: The parsed orientation.
+    """
+    if arg.upper() == "LR":
+        return Orientation.LEFT_RIGHT
+    else:  # Default to TOP_DOWN if the argument is not recognized
+        return Orientation.TOP_DOWN
+    
 # test 
 if __name__ == "__main__":
     import sys
     directory = sys.argv[1] if len(sys.argv) > 1 else r'ExampleSolution\Demo'
-    print(generate(directory, Orientation.TOP_DOWN))
+    orientation = parse_orientation(sys.argv[2]) if len(sys.argv) > 2 else Orientation.TOP_DOWN    
+    print(generate(directory, orientation))
